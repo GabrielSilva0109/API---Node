@@ -17,17 +17,14 @@ class SelecaoRepository {
         })
     }
 
-    findById() {
-        const id = req.params.id
+    findById(id) {
         const sql = "select * from selecoes where id = ?;"
-        conexao.query(sql, id, (erro, resultado) => {
-            const linha = resultado[0]
-            if(erro){
-                console.log(erro)
-                res.status(404).json({'erro': erro})
-            } else {
-                res.status(200).json(linha)
-            }
+        return new Promise((resolve, reject) =>{
+            conexao.query(sql,id, (erro, resultado)=>{
+                if(erro) return reject('Não foi possivel localizar')
+                const row = JSON.parse(JSON.stringify(resultado))
+                return resolve(row)
+            })
         })
     }
 
