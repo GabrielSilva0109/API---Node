@@ -55,7 +55,7 @@ app.post('/selecoes', (req, res) =>{
     conexao.query(sql, selecao, (erro, resultado) => {
         if(erro){
             console.log(erro)
-            res.status(404).json({'erro': erro})
+            res.status(400).json({'erro': erro})
         } else {
             res.status(201).json(resultado)
         }
@@ -63,9 +63,19 @@ app.post('/selecoes', (req, res) =>{
 })
 
 app.delete('/selecoes/:id', (req, res) => {
-    let index = buscarIndexSelecao(req.params.id)
-    selecoes.splice(index, 1)
-    res.send('Seleção excluida!')
+    //let index = buscarIndexSelecao(req.params.id)
+    //selecoes.splice(index, 1)
+    //res.send('Seleção excluida!')
+    const id = req.params.id
+    const sql = "DELETE FROM selecoes WHERE id = ?;"
+    conexao.query(sql, id, (erro, resultado) => {
+        if(erro){
+            console.log(erro)
+            res.status(404).json({'erro': erro})
+        } else {
+            res.status(200).json(resultado)
+        }
+    })
 })
 
 app.put('/selecoes/:id', (req, res) => {
