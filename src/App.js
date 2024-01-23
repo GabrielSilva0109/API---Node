@@ -15,6 +15,11 @@ const selecoes = [
     {id: 4, selecao: 'Camarões', grupo: 'G'}
 ]
 
+function buscarSelecaoPorId(id){
+    return selecoes.filter(selecao => selecao.id == id)
+}
+
+
 //Criar rota Padrão
 //Passar dois parametros "req" "res" = Requisição e Resposta
 app.get('/', (req, res) => {
@@ -23,6 +28,11 @@ app.get('/', (req, res) => {
 
 app.get('/selecoes', (request, response) => {
     response.status(200).send({selecoes})
+})
+
+app.get('/selecoes/:id', (req, res) =>{
+    //let index = req.params.id
+    res.json(buscarSelecaoPorId(req.params.id))
 })
 
 app.post('/selecoes', (req, res) =>{
