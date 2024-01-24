@@ -5,7 +5,7 @@ function App() {
   const [selecoes, setSelecoes] = useState([]);
 
   useEffect(() => {
-    fetch('/api/selecoes')  // Rota definida no servidor backend
+    fetch('/selecoes')  // Rota definida no servidor backend
       .then(response => response.json())
       .then(data => setSelecoes(data))
       .catch(error => console.error('Erro ao obter seleções:', error));
