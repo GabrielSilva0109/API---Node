@@ -1,0 +1,25 @@
+{
+  "name": "api---node",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "accepts": "^1.3.8",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  },
+  "scripts": {
+    "dev": "nodemon --experimental-specifier-resolution=node ./src/Server.js",
+    "install": "npm install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:frontend": "cd src/frontend && npm start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
