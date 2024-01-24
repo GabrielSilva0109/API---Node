@@ -1,4 +1,4 @@
-import app from "./src/App.js"
+import app from "./App.js"
 
 //Definir a Porta
 const PORT = 3000
