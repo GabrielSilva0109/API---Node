@@ -15,4 +15,5 @@ app.post('/selecoes', SelecaoController.store)
 app.delete('/selecoes/:id', SelecaoController.delete)
 app.put('/selecoes/:id', SelecaoController.update)
 
+
 export default app
