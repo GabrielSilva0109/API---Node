@@ -1,7 +1,7 @@
 import app from "./App.js"
 
 //Definir a Porta
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 //Escutar a porta 
 app.listen(PORT, () => {
