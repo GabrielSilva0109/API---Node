@@ -33,7 +33,7 @@ const ApiCall = () => {
       await axios.delete(`http://localhost:3000/selecoes/${id}`);
       fetchDataFromBackend();
     } catch (error) {
-      console.error('Erro ao excluir d  objeto:', error);
+      console.error('Erro ao excluir objeto:', error);
     }
   };
 
