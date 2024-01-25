@@ -10,4 +10,6 @@ routes.post('/usuarios', UsuarioController.store)
 routes.delete('/usuarios/:id', UsuarioController.delete)
 routes.put('/usuarios/:id', UsuarioController.update)
 
+routes.post('/login', UsuarioController.login)
+
 export default routes

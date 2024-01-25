@@ -26,6 +26,11 @@ class UsuarioRepository {
         const sql = "DELETE FROM usuario WHERE id = ?"
         return consulta(sql, id, 'Não foi possivel Deletar!')
     }
+
+    async login(email, senha) {
+        const sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?;";
+        return consulta(sql, [email, senha], 'Não foi possível realizar o login');
+    }
 }
 
 export default new UsuarioRepository
