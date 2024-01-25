@@ -1,13 +1,13 @@
 import { Router } from "express"
-import SelecaoController from "./app/controllers/SelecaoController.js"
+import UsuarioController from "./app/controllers/UsuarioController.js"
 
 const routes = Router()
 
 //Busca todas as Seleções
-routes.get('/selecoes', SelecaoController.index)
-routes.get('/selecoes/:id', SelecaoController.show)
-routes.post('/selecoes', SelecaoController.store)
-routes.delete('/selecoes/:id', SelecaoController.delete)
-routes.put('/selecoes/:id', SelecaoController.update)
+routes.get('/usuarios', UsuarioController.index)
+routes.get('/usuarios/:id', UsuarioController.show)
+routes.post('/usuarios', UsuarioController.store)
+routes.delete('/usuarios/:id', UsuarioController.delete)
+routes.put('/usuarios/:id', UsuarioController.update)
 
 export default routes

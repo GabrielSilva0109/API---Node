@@ -5,13 +5,10 @@ const conexao = mysql.createConnection({
     port: '3306',
     user: 'root',
     password: 'root',
-    database: 'bdcopa'
+    database: 'smart'
 })
 
 conexao.connect()
-
-
-
 /**
  * Executa codigo SQL ou sem valres
  * @param {string} sql instrução sql a ser executada
