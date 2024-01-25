@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'; // Importe o estilo padrão do react-toastify
 import { useNavigate } from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import './App.css';
+
 
 const ApiCall = () => {
   const [dadosDoBanco, setDadosDoBanco] = useState([]);
@@ -89,96 +90,141 @@ const ApiCall = () => {
 
   return (
     <div>
-      <h1>{isLoginPage ? 'Login' : 'Cadastro de Usuário'}</h1>
-      {isLoginPage ? (
-        <form>
-          <label>
-            Email:
-            <input
-              type="text"
-              value={loginCredenciais.email}
-              onChange={(e) => setLoginCredenciais({ ...loginCredenciais, email: e.target.value })}
-            />
-          </label>
-          <label>
-            Senha:
-            <input
-              type="password"
-              value={loginCredenciais.senha}
-              onChange={(e) => setLoginCredenciais({ ...loginCredenciais, senha: e.target.value })}
-            />
-          </label>
-          <button type="button" onClick={realizarLogin}>
-            Login
-          </button>
-        </form>
-      ) : (
-        <form>
-          <label>
-            Nome:
-            <input
-              type="text"
-              value={novoObjeto.nome}
-              onChange={(e) => setNovoObjeto({ ...novoObjeto, nome: e.target.value })}
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="text"
-              value={novoObjeto.email}
-              onChange={(e) => setNovoObjeto({ ...novoObjeto, email: e.target.value })}
-            />
-          </label>
-          <label>
-            CPF:
-            <input
-              type="text"
-              value={novoObjeto.cpf}
-              onChange={(e) => setNovoObjeto({ ...novoObjeto, cpf: e.target.value })}
-            />
-          </label>
-          <label>
-            Senha:
-            <input
-              type="password"
-              value={novoObjeto.senha}
-              onChange={(e) => setNovoObjeto({ ...novoObjeto, senha: e.target.value })}
-            />
-          </label>
-          <label>
-            Telefone:
-            <input
-              type="text"
-              value={novoObjeto.telefone}
-              onChange={(e) => setNovoObjeto({ ...novoObjeto, telefone: e.target.value })}
-            />
-          </label>
-          <button type="button" onClick={cadastrarNovoObjeto}>
-            Cadastrar Novo Usuário
-          </button>
-        </form>
-      )}
-      <button onClick={toggleLoginPage}>{isLoginPage ? 'Ir para o Cadastro' : 'Ir para o Login'}</button>
-      <button onClick={fetchDataFromBackend}>Lista de Usuários</button>
-      <button onClick={limparDados}>Limpar</button>
+      <form className="max-w-md mx-auto">
+        <h1 className="text-3xl font-bold mb-4">
+          {isLoginPage ? 'Login' : 'Cadastro de Usuário'}
+        </h1>
+
+        {isLoginPage ? (
+          // Formulário de Login
+          <div>
+            <label className="block mb-2">
+              Email:
+              <input
+                className="border border-gray-300 px-3 py-2 w-full"
+                type="text"
+                value={loginCredenciais.email}
+                onChange={(e) => setLoginCredenciais({ ...loginCredenciais, email: e.target.value })}
+              />
+            </label>
+            <label className="block mb-2">
+              Senha:
+              <input
+                className="border border-gray-300 px-3 py-2 w-full"
+                type="password"
+                value={loginCredenciais.senha}
+                onChange={(e) => setLoginCredenciais({ ...loginCredenciais, senha: e.target.value })}
+              />
+            </label>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+              type="button"
+              onClick={realizarLogin}
+            >
+              Login
+            </button>
+          </div>
+        ) : (
+          // Formulário de Cadastro
+          <div>
+            <label className="block mb-2">
+              Nome:
+              <input
+                className="border border-gray-300 px-3 py-2 w-full"
+                type="text"
+                value={novoObjeto.nome}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, nome: e.target.value })}
+              />
+            </label>
+            <label className="block mb-2">
+              Email:
+              <input
+                className="border border-gray-300 px-3 py-2 w-full"
+                type="text"
+                value={novoObjeto.email}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, email: e.target.value })}
+              />
+            </label>
+            <label className="block mb-2">
+              CPF:
+              <input
+                className="border border-gray-300 px-3 py-2 w-full"
+                type="text"
+                value={novoObjeto.cpf}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, cpf: e.target.value })}
+              />
+            </label>
+            <label className="block mb-2">
+              Senha:
+              <input
+                className="border border-gray-300 px-3 py-2 w-full"
+                type="password"
+                value={novoObjeto.senha}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, senha: e.target.value })}
+              />
+            </label>
+            <label className="block mb-2">
+              Telefone:
+              <input
+                className="border border-gray-300 px-3 py-2 w-full"
+                type="text"
+                value={novoObjeto.telefone}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, telefone: e.target.value })}
+              />
+            </label>
+            <button
+              className="bg-green-500 text-white px-4 py-2 rounded"
+              type="button"
+              onClick={cadastrarNovoObjeto}
+            >
+              Cadastrar Novo Usuário
+            </button>
+          </div>
+        )}
+      </form>
+
+      <button
+          className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+          onClick={toggleLoginPage}
+        >
+          {isLoginPage ? 'Ir para o Cadastro' : 'Ir para o Login'}
+        </button>
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+          onClick={fetchDataFromBackend}
+        >
+          Lista de Usuários
+        </button>
+        <button
+          className="bg-gray-500 text-white px-4 py-2 rounded"
+          onClick={limparDados}
+        >
+          Limpar
+        </button>
+
       {/* O restante do código permanece o mesmo */}
       {/* ToastContainer para renderizar as notificações */}
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       
-      <ul>
+      <ul className="list-disc">
         {dadosDoBanco.map((usuario) => (
-          <li key={usuario.id} >
+          <li key={usuario.id} className="my-2">
             <strong>ID:</strong> {usuario.id}, <strong>Nome:</strong> {usuario.nome},{' '}
-            <strong>Email:</strong>{usuario.email}
-            <strong>CPF:</strong>{usuario.cpf}
-            <strong>Senha:</strong>{usuario.senha}
-            <strong>Telefone:</strong>{usuario.telefone}
-            <button onClick={() => excluirObjeto(usuario.id)}>Excluir</button>
+            <strong>Email:</strong> {usuario.email}
+            <strong>CPF:</strong> {usuario.cpf}
+            <strong>Senha:</strong> {usuario.senha}
+            <strong>Telefone:</strong> {usuario.telefone}
+            <button
+              className="bg-red-500 text-white px-2 py-1 ml-2 rounded"
+              onClick={() => excluirObjeto(usuario.id)}
+            >
+              Excluir
+            </button>
           </li>
         ))}
       </ul>
-    
+
+
     
     </div>
   );
