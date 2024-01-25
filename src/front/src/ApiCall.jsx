@@ -3,8 +3,19 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Importe o estilo padrão do react-toastify
 import { useNavigate } from 'react-router-dom';
-import { Button, ButtonGroup } from '@chakra-ui/react'
 
+import {
+  Center,
+  Box,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Button,
+  ButtonGroup,
+  Input,
+  IconButton 
+} from '@chakra-ui/react'
 
 const ApiCall = () => {
   const [dadosDoBanco, setDadosDoBanco] = useState([]);
@@ -89,7 +100,19 @@ const ApiCall = () => {
   };
 
   return (
+
     <div>
+      <Center></Center>
+      <Box 
+      w="500px" // Largura do seu box
+      h="400px" // Altura do seu box
+      mx="auto" // Margem horizontal automática para centralizar horizontalmente
+      my="auto" // Margem vertical automática para centralizar verticalmente
+      bg="gray.100" // Cor de fundo do seu box
+      p="4" // Preenchimento interno
+      borderRadius="lg" // Borda arredondada
+      boxShadow="md" // Sombra
+      >
       <form className="max-w-md mx-auto">
         <h1 className="text-3xl font-bold mb-4">
           {isLoginPage ? 'Login' : 'Cadastro de Usuário'}
@@ -97,92 +120,66 @@ const ApiCall = () => {
 
         {isLoginPage ? (
           // Formulário de Login
-          <div>
-            <label className="block mb-2">
-              Email:
-              <input
-                className="border border-gray-300 px-3 py-2 w-full"
-                type="text"
-                value={loginCredenciais.email}
-                onChange={(e) => setLoginCredenciais({ ...loginCredenciais, email: e.target.value })}
-              />
-            </label>
-            <label className="block mb-2">
-              Senha:
-              <input
-                className="border border-gray-300 px-3 py-2 w-full"
-                type="password"
-                value={loginCredenciais.senha}
-                onChange={(e) => setLoginCredenciais({ ...loginCredenciais, senha: e.target.value })}
-              />
-            </label>
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-              type="button"
-              onClick={realizarLogin}
-            >
-              Login
-            </button>
-          </div>
+          <Box>
+             <FormControl>
+              <FormLabel>Email</FormLabel>
+              <Input type='text' value={loginCredenciais.email}
+               onChange={(e) => setLoginCredenciais({ ...loginCredenciais, email: e.target.value })}/>
+
+              <FormLabel>Senha</FormLabel>
+              <Input type='text' value={loginCredenciais.senha}
+                onChange={(e) => setLoginCredenciais({ ...loginCredenciais, senha: e.target.value })}/>
+
+            </FormControl>
+            <Center>
+              <Button colorScheme='yellow' type="button"
+                onClick={realizarLogin}>Login</Button>
+            </Center> 
+           
+          </Box>
         ) : (
           // Formulário de Cadastro
-          <div>
-            <label className="block mb-2">
-              Nome:
-              <input
-                className="border border-gray-300 px-3 py-2 w-full"
-                type="text"
-                value={novoObjeto.nome}
-                onChange={(e) => setNovoObjeto({ ...novoObjeto, nome: e.target.value })}
-              />
-            </label>
-            <label className="block mb-2">
-              Email:
-              <input
-                className="border border-gray-300 px-3 py-2 w-full"
-                type="text"
-                value={novoObjeto.email}
-                onChange={(e) => setNovoObjeto({ ...novoObjeto, email: e.target.value })}
-              />
-            </label>
-            <label className="block mb-2">
-              CPF:
-              <input
-                className="border border-gray-300 px-3 py-2 w-full"
-                type="text"
-                value={novoObjeto.cpf}
-                onChange={(e) => setNovoObjeto({ ...novoObjeto, cpf: e.target.value })}
-              />
-            </label>
-            <label className="block mb-2">
-              Senha:
-              <input
-                className="border border-gray-300 px-3 py-2 w-full"
-                type="password"
-                value={novoObjeto.senha}
-                onChange={(e) => setNovoObjeto({ ...novoObjeto, senha: e.target.value })}
-              />
-            </label>
-            <label className="block mb-2">
-              Telefone:
-              <input
-                className="border border-gray-300 px-3 py-2 w-full"
-                type="text"
-                value={novoObjeto.telefone}
-                onChange={(e) => setNovoObjeto({ ...novoObjeto, telefone: e.target.value })}
-              />
-            </label>
-            <button
-              className="bg-green-500 text-white px-4 py-2 rounded"
-              type="button"
-              onClick={cadastrarNovoObjeto}
-            >
-              Cadastrar Novo Usuário
-            </button>
-          </div>
+          <Box>
+            <FormControl>
+              <FormLabel>Nome</FormLabel>
+              <Input value={novoObjeto.nome}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, nome: e.target.value })}/>
+              
+              <FormLabel>Email</FormLabel>
+              <Input value={novoObjeto.email}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, email: e.target.value })}/>
+            
+              <FormLabel>CPF</FormLabel>
+              <Input value={novoObjeto.cpf}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, cpf: e.target.value })}/>
+            
+              <FormLabel>Telefone</FormLabel>
+              <Input value={novoObjeto.telefone}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, telefone: e.target.value })}/>
+
+              <FormLabel>Senha</FormLabel>
+              <Input value={novoObjeto.senha}
+                onChange={(e) => setNovoObjeto({ ...novoObjeto, senha: e.target.value })}/>
+            
+            </FormControl>
+            
+            <Center>
+              <Button colorScheme='yellow'
+                type="button"
+                onClick={cadastrarNovoObjeto}
+              >
+                Cadastrar Novo Usuário
+              </Button>
+            </Center>
+            
+            
+          </Box>
         )}
       </form>
+      </Box>
+      
 
+     
 
       <Button margin='10px' onClick={toggleLoginPage} colorScheme='teal' size='md'>{isLoginPage ? 'Ir para o Cadastro' : 'Ir para o Login'}</Button>
       
