@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Importe o estilo padrão do react-toastify
 import { useNavigate } from 'react-router-dom';
-import './App.css';
+import { Button, ButtonGroup } from '@chakra-ui/react'
 
 
 const ApiCall = () => {
@@ -183,24 +183,12 @@ const ApiCall = () => {
         )}
       </form>
 
-      <button
-          className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-          onClick={toggleLoginPage}
-        >
-          {isLoginPage ? 'Ir para o Cadastro' : 'Ir para o Login'}
-        </button>
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-          onClick={fetchDataFromBackend}
-        >
-          Lista de Usuários
-        </button>
-        <button
-          className="bg-gray-500 text-white px-4 py-2 rounded"
-          onClick={limparDados}
-        >
-          Limpar
-        </button>
+
+      <Button margin='10px' onClick={toggleLoginPage} colorScheme='teal' size='md'>{isLoginPage ? 'Ir para o Cadastro' : 'Ir para o Login'}</Button>
+      
+      <Button margin='10px'onClick={fetchDataFromBackend} colorScheme='teal' size='md'>Lista de Usuários</Button>
+
+      <Button margin='10px' onClick={limparDados} colorScheme='teal' size='md'>Limpar</Button>
 
       {/* O restante do código permanece o mesmo */}
       {/* ToastContainer para renderizar as notificações */}
