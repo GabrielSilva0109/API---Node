@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useHistory } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const ApiCall = () => {
   const [dadosDoBanco, setDadosDoBanco] = useState([]);
   const [novoObjeto, setNovoObjeto] = useState({ nome: '', email: '', cpf: '', senha: '', telefone: '' });
   const [loginCredenciais, setLoginCredenciais] = useState({ email: '', senha: '' });
   const [isLoginPage, setIsLoginPage] = useState(true);
+
+  // useNavigate para navegação
+  const navigate = useNavigate()
+
+
 
   const fetchDataFromBackend = async () => {
     try {
@@ -38,20 +43,11 @@ const ApiCall = () => {
 
   const realizarLogin = async () => {
     try {
-      // Validar se o email e a senha foram fornecidos
-      if (!loginCredenciais.email || !loginCredenciais.senha) {
-        toast.error('Por favor, forneça email e senha.');
-        return;
-      }
-  
       const response = await axios.post('http://localhost:3000/login', loginCredenciais);
   
-      // Verifique se a resposta indica uma autenticação bem-sucedida
-      if (response.data && response.data.autenticado) {
-        // Lógica adicional após um login bem-sucedido (se necessário)
-        
-        // Limpe os campos de email e senha após o login
-        setLoginCredenciais({ email: '', senha: '' });
+      if (response.data && response.data.usuario) {
+        // Usuário autenticado, você pode realizar ações adicionais após o login aqui
+        navigate('/home', { state: { usuario: response.data.usuario } });
   
         // Notificação de sucesso
         toast.success('Login bem-sucedido!', { autoClose: 2000 });
@@ -60,14 +56,10 @@ const ApiCall = () => {
         toast.error('Credenciais inválidas!');
       }
     } catch (error) {
-      // Trate erros específicos, se necessário
-      if (error.response && error.response.status === 401) {
-        toast.error('Credenciais inválidas!');
-      } else {
-        console.error('Erro durante o login:', error);
-        // Notificação de erro geral
-        toast.error('Erro durante o login!');
-      }
+      console.error('Erro durante o login:', error);
+  
+      // Notificação de erro geral
+      toast.error('Erro durante o login!');
     }
   };
   
@@ -176,9 +168,11 @@ const ApiCall = () => {
       
       <ul>
         {dadosDoBanco.map((usuario) => (
-          <li key={usuario.id}>
+          <li key={usuario.id} >
             <strong>ID:</strong> {usuario.id}, <strong>Nome:</strong> {usuario.nome},{' '}
             <strong>Email:</strong>{usuario.email}
+            <strong>CPF:</strong>{usuario.cpf}
+            <strong>Senha:</strong>{usuario.senha}
             <strong>Telefone:</strong>{usuario.telefone}
             <button onClick={() => excluirObjeto(usuario.id)}>Excluir</button>
           </li>

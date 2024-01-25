@@ -29,7 +29,14 @@ class UsuarioRepository {
 
     async login(email, senha) {
         const sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?;";
-        return consulta(sql, [email, senha], 'Não foi possível realizar o login');
+        const result = await consulta(sql, [email, senha], 'Não foi possível realizar o login');
+      
+        // Verifique se encontrou algum usuário
+        if (result.length > 0) {
+          return result[0]; // Retorna o usuário encontrado
+        } else {
+          return null; // Retorna null se não encontrar usuário
+        }
     }
 }
 
