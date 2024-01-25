@@ -1,19 +1,30 @@
-// Importe as dependências necessárias
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ApiCall from './ApiCall'; // Ajuste o caminho conforme necessário
-import Home from './pages/Home';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import ApiCall from './ApiCall.jsx';
+import Home from './pages/Home.jsx';
 
-// Crie um componente que envolva ApiCall com um Router
+const PrivateRoute = ({ element, isAuthenticated, fallbackPath }) => {
+  return isAuthenticated ? element : <Navigate to={fallbackPath} />;
+};
+
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+
+  const handleLogin = () => {
+    setIsAuthenticated((prev) => !prev);
+  };
+
   return (
-    <Router>
-      {/* Defina suas rotas aqui, se necessário */}
-      <Routes>
-        <Route path="/" element={<ApiCall />} />
-        <Route path='/home' element={<Home />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<ApiCall />} />
+      {/* Use o componente PrivateRoute para a rota /home */}
+      <PrivateRoute
+        path="/home"
+        element={<Home />}
+        isAuthenticated={isAuthenticated}
+        fallbackPath="/"
+      />
+    </Routes>
   );
 };
 
