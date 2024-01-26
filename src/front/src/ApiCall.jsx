@@ -52,13 +52,12 @@ const ApiCall = () => {
       });
 
       // Notificação de sucesso
-      toast.success('Usuário cadastrado com sucesso! Faça login para continuar.', { autoClose: 2000 });
-
+      toast.success('Usuário cadastrado com sucesso!', { autoClose: 2500 });
+      toast.success('Faça login para continuar.', { autoClose: 2500 });
       // Redireciona para a página de login após o cadastro
       setIsLoginPage(true);
     } catch (error) {
       console.error('Erro ao cadastrar novo Usuário:', error);
-
       // Notificação de erro
       toast.error('Erro ao cadastrar novo Usuário!');
     }
