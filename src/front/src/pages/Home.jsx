@@ -2,8 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast,  } from 'react-toastify';
-
-import { Button, ButtonGroup,Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator } from '@chakra-ui/react';
+import { Button, Box, Center, Text, Flex, ButtonGroup,Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator } from '@chakra-ui/react';
 
 function Home() {
   const location = useLocation();
@@ -52,59 +51,60 @@ function Home() {
   };
 
   return (
-    <div>
-      {isUserLoggedIn && <h2>Bem-vindo à Página Home, {location.state.usuario.nome}</h2>}
-
-      {/* Botões */}
-      <Button margin='10px' onClick={fetchDataFromBackend} colorScheme='teal' size='md'>
+    
+    <Box
+      background='gray.900'
+      w='100%'
+      h='100vh'
+      p='0'      
+    >
+      <Box
+      w='100%'
+      h='50px'
+      pd='0'
+      m='0'
+      display='flex'
+      >
+        <Text fontSize='2.5rem' as='b' color='white'>
+        {isUserLoggedIn && <h2>Bem-vindo {location.state.usuario.nome}</h2>}</Text>
+        <Button margin='10px' onClick={fetchDataFromBackend} colorScheme='teal' size='md'>
         Lista de Usuários
-      </Button>
-      <Button margin='10px' onClick={limparDados} colorScheme='teal' size='md'>
+        </Button>
+        <Button margin='10px' onClick={limparDados} colorScheme='teal' size='md'>
         Limpar
-      </Button>
+        </Button>
+        <Button margin='10px' onClick={useEffect} colorScheme='teal' size='md'>
+        Sair
+        </Button>
+      
+      </Box>
+      
+      <Box
+       
+      >
+        {/* Lista de usuários */}
+        <ul className="list-disc">
+          {dadosDoBanco.map((usuario) => (
+            <li key={usuario.id} className="my-2">
+              <strong>ID:</strong> {usuario.id}, <strong>Nome:</strong> {usuario.nome},{' '}
+              <strong>Email:</strong> {usuario.email}, <strong>CPF:</strong> {usuario.cpf},{' '}
+              <strong>Senha:</strong> {usuario.senha}, <strong>Telefone:</strong> {usuario.telefone}
+              <button
+                className="bg-red-500 text-white px-2 py-1 ml-2 rounded"
+                onClick={() => excluirObjeto(usuario.id)}
+              >
+                Excluir
+              </button>
+            </li>
+          ))}
+        </ul>
 
-      {/* Lista de usuários */}
-      <ul className="list-disc">
-        {dadosDoBanco.map((usuario) => (
-          <li key={usuario.id} className="my-2">
-            <strong>ID:</strong> {usuario.id}, <strong>Nome:</strong> {usuario.nome},{' '}
-            <strong>Email:</strong> {usuario.email}, <strong>CPF:</strong> {usuario.cpf},{' '}
-            <strong>Senha:</strong> {usuario.senha}, <strong>Telefone:</strong> {usuario.telefone}
-            <button
-              className="bg-red-500 text-white px-2 py-1 ml-2 rounded"
-              onClick={() => excluirObjeto(usuario.id)}
-            >
-              Excluir
-            </button>
-          </li>
-        ))}
-      </ul>
+      </Box>
+      
+      
 
-      <Tabs position="relative" variant="unstyled">
-    <TabList>
-      <Tab>One</Tab>
-      <Tab>Two</Tab>
-      <Tab>Three</Tab>
-    </TabList>
-    <TabIndicator
-      mt="-1.5px"
-      height="2px"
-      bg="blue.500"
-      borderRadius="1px"
-    />
-    <TabPanels>
-      <TabPanel>
-        <p>one!</p>
-      </TabPanel>
-      <TabPanel>
-        <p>two!</p>
-      </TabPanel>
-      <TabPanel>
-        <p>three!</p>
-      </TabPanel>
-    </TabPanels>
-  </Tabs>
-    </div>
+     
+    </Box>
   );
 }
 
