@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup } from '@chakra-ui/react';
-import { toast } from 'react-toastify';
+import { toast, Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator } from 'react-toastify';
 
 function Home() {
   const location = useLocation();
@@ -78,6 +78,31 @@ function Home() {
           </li>
         ))}
       </ul>
+
+      <Tabs position="relative" variant="unstyled">
+    <TabList>
+      <Tab>One</Tab>
+      <Tab>Two</Tab>
+      <Tab>Three</Tab>
+    </TabList>
+    <TabIndicator
+      mt="-1.5px"
+      height="2px"
+      bg="blue.500"
+      borderRadius="1px"
+    />
+    <TabPanels>
+      <TabPanel>
+        <p>one!</p>
+      </TabPanel>
+      <TabPanel>
+        <p>two!</p>
+      </TabPanel>
+      <TabPanel>
+        <p>three!</p>
+      </TabPanel>
+    </TabPanels>
+  </Tabs>
     </div>
   );
 }

@@ -11,6 +11,7 @@ import {
   FormLabel,
   Input,
   Button,
+  Text,
 } from '@chakra-ui/react';
 
 const ApiCall = () => {
@@ -54,7 +55,6 @@ const ApiCall = () => {
       // Notificação de sucesso
       toast.success('Usuário cadastrado com sucesso!', { autoClose: 2500 });
       toast.success('Faça login para continuar.', { autoClose: 2500 });
-      // Redireciona para a página de login após o cadastro
       setIsLoginPage(true);
     } catch (error) {
       console.error('Erro ao cadastrar novo Usuário:', error);
@@ -105,7 +105,11 @@ const ApiCall = () => {
     >
       <Box w='500px' mx='auto' my='auto' bg='white' p='4' borderRadius='lg' boxShadow='md'>
         <form>
-          <h1>{isLoginPage ? 'Login' : 'Cadastro'}</h1>
+          <Center>
+          <Text fontSize='2.5rem' as='b'>{isLoginPage ? 'Login' : 'Cadastro'}</Text>
+            <h1></h1>
+          </Center>
+          
 
           <Box>
             <FormControl>
