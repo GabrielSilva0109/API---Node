@@ -76,11 +76,6 @@ const ApiCall = () => {
     }
   };
   
-  
-
-  const limparDados = () => {
-    setDadosDoBanco([]);
-  };
 
   const excluirObjeto = async (id) => {
     try {
@@ -104,24 +99,27 @@ const ApiCall = () => {
 
     <Flex
       background='gray.900'
-      width='100%'
-      heigth='100%'
+      w="100%" 
+      h="100vh" 
+      p="4"
+      
+      boxShadow="md"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
       >
-      <Center></Center>
+      
       <Box 
-      w="500px" // Largura do seu box
-      h="400px" // Altura do seu box
-      mx="auto" // Margem horizontal automática para centralizar horizontalmente
-      my="auto" // Margem vertical automática para centralizar verticalmente
-      bg="gray.100" // Cor de fundo do seu box
-      p="4" // Preenchimento interno
-      borderRadius="lg" // Borda arredondada
-      boxShadow="md" // Sombra
+      w="500px" 
+      mx="auto"
+      my="auto"
+      bg="white" 
+      p="4" 
+      borderRadius="lg" 
+      boxShadow="md"
       >
-      <form className="max-w-md mx-auto">
-        <h1 className="text-3xl font-bold mb-4">
-          {isLoginPage ? 'Login' : 'Cadastro de Usuário'}
-        </h1>
+      <form>
+        <h1>{isLoginPage ? 'Login' : 'Cadastro'}</h1>
 
         {isLoginPage ? (
           // Formulário de Login
@@ -136,10 +134,15 @@ const ApiCall = () => {
                 onChange={(e) => setLoginCredenciais({ ...loginCredenciais, senha: e.target.value })}/>
 
             </FormControl>
+
+            
             <Center>
               <Button colorScheme='yellow' type="button"
+              margin='10px'
                 onClick={realizarLogin}>Login</Button>
-            </Center> 
+                <Button margin='10px' onClick={toggleLoginPage} colorScheme='teal' size='md'>{isLoginPage ? 'Cadastro' : 'Login'}</Button>
+            </Center>
+            
            
           </Box>
         ) : (
@@ -170,15 +173,22 @@ const ApiCall = () => {
             
             <Center>
               <Button colorScheme='yellow'
+                margin='10px'
                 type="button"
                 onClick={cadastrarNovoObjeto}
               >
-                Cadastrar Novo Usuário
+                Cadastrar
               </Button>
+              <Button margin='10px' onClick={toggleLoginPage} colorScheme='teal' size='md'>{isLoginPage ? 'Cadastro' : 'Login'}</Button>
             </Center>
             
             
+
+      
+
+            
           </Box>
+          
         )}
       </form>
       </Box>
@@ -186,12 +196,9 @@ const ApiCall = () => {
 
      
 
-      <Button margin='10px' onClick={toggleLoginPage} colorScheme='teal' size='md'>{isLoginPage ? 'Ir para o Cadastro' : 'Ir para o Login'}</Button>
       
-      <Button margin='10px'onClick={fetchDataFromBackend} colorScheme='teal' size='md'>Lista de Usuários</Button>
-
-      <Button margin='10px' onClick={limparDados} colorScheme='teal' size='md'>Limpar</Button>
-
+      
+      
       {/* O restante do código permanece o mesmo */}
       {/* ToastContainer para renderizar as notificações */}
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
