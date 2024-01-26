@@ -32,7 +32,7 @@ function Home() {
       toast.error('Erro ao buscar dados do backend!');
     }
   };
-
+  
   const limparDados = () => {
     setDadosDoBanco([]);
   };
