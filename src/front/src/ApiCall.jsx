@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'; // Importe o estilo padrão do r
 import { useNavigate } from 'react-router-dom';
 
 import {
+  Flex,
   Center,
   Box,
   FormControl,
@@ -101,7 +102,11 @@ const ApiCall = () => {
 
   return (
 
-    <div>
+    <Flex
+      background='gray.900'
+      width='100%'
+      heigth='100%'
+      >
       <Center></Center>
       <Box 
       w="500px" // Largura do seu box
@@ -211,7 +216,7 @@ const ApiCall = () => {
 
 
     
-    </div>
+    </Flex>
   );
 };
 
