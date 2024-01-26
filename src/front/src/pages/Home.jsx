@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, ButtonGroup } from '@chakra-ui/react';
-import { toast, Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator } from 'react-toastify';
+import { toast,  } from 'react-toastify';
+
+import { Button, ButtonGroup,Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator } from '@chakra-ui/react';
 
 function Home() {
   const location = useLocation();
