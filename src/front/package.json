@@ -13,6 +13,7 @@
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "crypto-browserify": "^3.12.0",
     "framer-motion": "^11.0.3",
     "path-browserify": "^1.0.1",

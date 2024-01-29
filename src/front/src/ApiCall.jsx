@@ -36,14 +36,19 @@ const ApiCall = () => {
       const response = await axios.get('http://localhost:3000/usuarios');
       setDadosDoBanco(response.data);
     } catch (error) {
-      console.error('Erro ao buscar dados do backend:', error);
+      console.error('Erro ao buscar dados do backend:', error)
     }
-  };
+  }
 
   const cadastrarNovoObjeto = async () => {
     try {
+      const hashedPassword = await hashPassword(novoObjeto.senha);
       
-      await axios.post('http://localhost:3000/usuarios', novoObjeto);
+      await axios.post('http://localhost:3000/usuarios', {
+        ...novoObjeto,
+        senha: hashedPassword,
+      })
+      
       fetchDataFromBackend();
       setNovoObjeto({
         nome: '',
@@ -60,16 +65,18 @@ const ApiCall = () => {
     } catch (error) {
       console.error('Erro ao cadastrar novo Usuário:', error);
       // Notificação de erro
-      toast.error('Erro ao cadastrar novo Usuário!');
+      toast.error('Erro ao cadastrar novo Usuário!' + error);
     }
   };
 
   const realizarLogin = async () => {
     try {
-      const response = await axios.post(
-        'http://localhost:3000/login',
-        loginCredenciais
-      );
+      const hashedPassword = await hashPassword(loginCredenciais.senha);
+      
+      const response = await axios.post('http://localhost:3000/login', {
+        ...loginCredenciais,
+        senha: hashedPassword,
+      });
 
       if (response.data && response.data.usuario) {
         // Usuário autenticado, você pode realizar ações adicionais após o login aqui
@@ -99,36 +106,42 @@ const ApiCall = () => {
       /^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/,
       (match, p1, p2, p3, p4) => {
         let result = '';
-  
+
         if (p1) result += p1 + '.';
         if (p2) result += p2 + '.';
         if (p3) result += p3;
         if (p4) result += '-' + p4;
-  
+
         return result;
       }
     );
-  
+
     return formattedCPF;
   };
-  
-  //Função para formatar o telefone
+
+  // Função para formatar o telefone
   const formatPhoneNumber = (value) => {
     const cleanedValue = value.replace(/\D/g, '');
     const formattedPhoneNumber = cleanedValue.replace(
       /^(\d{0,2})(\d{0,5})(\d{0,4})/,
       (match, p1, p2, p3) => {
         let result = '';
-  
+
         if (p1) result += '(' + p1;
         if (p2) result += ') ' + p2;
         if (p3) result += '-' + p3;
-  
+
         return result;
       }
     );
-  
+
     return formattedPhoneNumber;
+  };
+
+  // Função para hashear a senha usando Bcrypt
+  const hashPassword = async (password) => {
+    const response = await axios.post('http://localhost:3000/hash', { password });
+    return response.data.hash;
   };
 
   return (

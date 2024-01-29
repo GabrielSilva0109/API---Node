@@ -1,4 +1,7 @@
-import conexao, { consulta } from "../database/Conexao.js"
+import conexao, { consulta } from "../database/conexao.js"
+import bcrypt from 'bcrypt';
+
+const saltRounds = 10;
 
 class UsuarioRepository {
 
@@ -18,6 +21,11 @@ class UsuarioRepository {
     }
 
     update(usuario, id) {
+        if (usuario.senha) {
+            const hashedPassword =  bcrypt.hash(usuario.senha, saltRounds);
+            usuario.senha = hashedPassword;
+        }
+
         const sql = "UPDATE usuario SET ? WHERE id = ?;"
         return consulta(sql, [usuario, id], 'Não foi possivel Atualizar!')
     }
@@ -27,17 +35,20 @@ class UsuarioRepository {
         return consulta(sql, id, 'Não foi possivel Deletar!')
     }
 
-    async login(email, senha) {
-        const sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?;";
-        const result = await consulta(sql, [email, senha], 'Não foi possível realizar o login');
-      
-        // Verifique se encontrou algum usuário
+    login(email, senha) {
+        const sql = "SELECT * FROM usuario WHERE email = ?;";
+        const result =  consulta(sql, [email], 'Não foi possível realizar o login');
+
         if (result.length > 0) {
-          return result[0]; // Retorna o usuário encontrado
-        } else {
-          return null; // Retorna null se não encontrar usuário
+            const match =  bcrypt.compare(senha, result[0].senha);
+            if (match) {
+                return result[0];
+            }
         }
+
+        return null;
     }
+
 }
 
 export default new UsuarioRepository
