@@ -42,6 +42,7 @@ const ApiCall = () => {
 
   const cadastrarNovoObjeto = async () => {
     try {
+      
       await axios.post('http://localhost:3000/usuarios', novoObjeto);
       fetchDataFromBackend();
       setNovoObjeto({
@@ -92,6 +93,44 @@ const ApiCall = () => {
     setIsLoginPage((prev) => !prev);
   };
 
+  const formatCPF = (value) => {
+    const cleanedValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    const formattedCPF = cleanedValue.replace(
+      /^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/,
+      (match, p1, p2, p3, p4) => {
+        let result = '';
+  
+        if (p1) result += p1 + '.';
+        if (p2) result += p2 + '.';
+        if (p3) result += p3;
+        if (p4) result += '-' + p4;
+  
+        return result;
+      }
+    );
+  
+    return formattedCPF;
+  };
+  
+  //Função para formatar o telefone
+  const formatPhoneNumber = (value) => {
+    const cleanedValue = value.replace(/\D/g, '');
+    const formattedPhoneNumber = cleanedValue.replace(
+      /^(\d{0,2})(\d{0,5})(\d{0,4})/,
+      (match, p1, p2, p3) => {
+        let result = '';
+  
+        if (p1) result += '(' + p1;
+        if (p2) result += ') ' + p2;
+        if (p3) result += '-' + p3;
+  
+        return result;
+      }
+    );
+  
+    return formattedPhoneNumber;
+  };
+
   return (
     <Flex
       background='gray.900'
@@ -106,10 +145,10 @@ const ApiCall = () => {
       <Box w='500px' mx='auto' my='auto' bg='white' p='4' borderRadius='lg' boxShadow='md'>
         <form>
           <Center>
-          <Text fontSize='2.5rem' as='b'>{isLoginPage ? 'Login' : 'Cadastro'}</Text>
-            <h1></h1>
+            <Text fontSize='2.5rem' as='b'>
+              {isLoginPage ? 'Login' : 'Cadastro'}
+            </Text>
           </Center>
-          
 
           <Box>
             <FormControl>
@@ -127,7 +166,7 @@ const ApiCall = () => {
 
                   <FormLabel>Senha</FormLabel>
                   <Input
-                    type='text'
+                    type='password'
                     value={loginCredenciais.senha}
                     onChange={(e) =>
                       setLoginCredenciais({ ...loginCredenciais, senha: e.target.value })
@@ -145,19 +184,22 @@ const ApiCall = () => {
 
                   <FormLabel>Email</FormLabel>
                   <Input
+                    placeholder='exemplo@email.com'
                     value={novoObjeto.email}
                     onChange={(e) => setNovoObjeto({ ...novoObjeto, email: e.target.value })}
                   />
 
                   <FormLabel>CPF</FormLabel>
                   <Input
-                    value={novoObjeto.cpf}
+                    placeholder='000.000.000-00'
+                    value={formatCPF(novoObjeto.cpf)}
                     onChange={(e) => setNovoObjeto({ ...novoObjeto, cpf: e.target.value })}
                   />
 
                   <FormLabel>Telefone</FormLabel>
                   <Input
-                    value={novoObjeto.telefone}
+                    placeholder='(00) 00000-0000'
+                    value={formatPhoneNumber(novoObjeto.telefone)}
                     onChange={(e) =>
                       setNovoObjeto({ ...novoObjeto, telefone: e.target.value })
                     }
@@ -165,6 +207,7 @@ const ApiCall = () => {
 
                   <FormLabel>Senha</FormLabel>
                   <Input
+                    type='password'
                     value={novoObjeto.senha}
                     onChange={(e) => setNovoObjeto({ ...novoObjeto, senha: e.target.value })}
                   />
@@ -173,7 +216,12 @@ const ApiCall = () => {
             </FormControl>
 
             <Center>
-              <Button colorScheme='yellow' type='button' margin='10px' onClick={isLoginPage ? realizarLogin : cadastrarNovoObjeto}>
+              <Button
+                colorScheme='yellow'
+                type='button'
+                margin='10px'
+                onClick={isLoginPage ? realizarLogin : cadastrarNovoObjeto}
+              >
                 {isLoginPage ? 'Login' : 'Cadastrar'}
               </Button>
               <Button
