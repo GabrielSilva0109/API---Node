@@ -34,7 +34,7 @@ class UsuarioController {
 
     async login(req, res) {
         try {
-            const { email, senha } = req.body;
+            const { email, senha } = req.body
 
             // Validação básica
             if (!email || !senha) {

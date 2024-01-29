@@ -42,41 +42,37 @@ const ApiCall = () => {
 
   const cadastrarNovoObjeto = async () => {
     try {
-      const hashedPassword = await hashPassword(novoObjeto.senha);
-      
-      await axios.post('http://localhost:3000/usuarios', {
-        ...novoObjeto,
-        senha: hashedPassword,
-      })
-      
-      fetchDataFromBackend();
-      setNovoObjeto({
-        nome: '',
-        email: '',
-        cpf: '',
-        senha: '',
-        telefone: '',
-      });
+        const hashedPassword = await hashPassword(novoObjeto.senha);
 
-      // Notificação de sucesso
-      toast.success('Usuário cadastrado com sucesso!', { autoClose: 2500 });
-      toast.success('Faça login para continuar.', { autoClose: 2500 });
-      setIsLoginPage(true);
+        await axios.post('http://localhost:3000/usuarios', {
+            ...novoObjeto,
+            senha: hashedPassword,
+        });
+
+        fetchDataFromBackend();
+        setNovoObjeto({
+            nome: '',
+            email: '',
+            cpf: '',
+            senha: '',
+            telefone: '',
+        });
+
+        // Notificação de sucesso
+        toast.success('Usuário cadastrado com sucesso!', { autoClose: 2500 });
+        toast.success('Faça login para continuar.', { autoClose: 2500 });
+        setIsLoginPage(true);
     } catch (error) {
-      console.error('Erro ao cadastrar novo Usuário:', error);
-      // Notificação de erro
-      toast.error('Erro ao cadastrar novo Usuário!' + error);
+        console.error('Erro ao cadastrar novo Usuário:', error);
+        // Notificação de erro
+        toast.error('Erro ao cadastrar novo Usuário! ' + error.message);
     }
-  };
+};
+
 
   const realizarLogin = async () => {
     try {
-      const hashedPassword = await hashPassword(loginCredenciais.senha);
-      
-      const response = await axios.post('http://localhost:3000/login', {
-        ...loginCredenciais,
-        senha: hashedPassword,
-      });
+      const response = await axios.post('http://localhost:3000/login', loginCredenciais)
 
       if (response.data && response.data.usuario) {
         // Usuário autenticado, você pode realizar ações adicionais após o login aqui
@@ -90,7 +86,6 @@ const ApiCall = () => {
       }
     } catch (error) {
       console.error('Erro durante o login:', error);
-
       // Notificação de erro geral
       toast.error('Erro durante o login!');
     }

@@ -1,14 +1,24 @@
 import conexao, { consulta } from "../database/conexao.js"
-import bcrypt from 'bcrypt';
+import bcript from 'bcrypt'
 
-const saltRounds = 10;
+const saltRounds = 10
+
 
 class UsuarioRepository {
 
-    create(usuario) {
-        const sql = "insert into usuario SET ?;"
-        return consulta(sql, usuario, 'Não foi possivel Cadastrar!')
+    async create(usuario) {
+        try {
+            const hashedPassword = await bcrypt.hash(usuario.senha, saltRounds);
+            usuario.senha = hashedPassword;
+    
+            const sql = "insert into usuario SET ?;";
+            return await consulta(sql, usuario, 'Não foi possível Cadastrar!');
+        } catch (error) {
+            // Se houver um erro durante a criação do usuário, lançamos a exceção
+            throw new Error('Não foi possível Cadastrar! Erro interno: ' + error.message);
+        }
     }
+    
 
     findAll() {
         const sql = "select * from usuario;"
@@ -21,11 +31,6 @@ class UsuarioRepository {
     }
 
     update(usuario, id) {
-        if (usuario.senha) {
-            const hashedPassword =  bcrypt.hash(usuario.senha, saltRounds);
-            usuario.senha = hashedPassword;
-        }
-
         const sql = "UPDATE usuario SET ? WHERE id = ?;"
         return consulta(sql, [usuario, id], 'Não foi possivel Atualizar!')
     }
@@ -35,18 +40,15 @@ class UsuarioRepository {
         return consulta(sql, id, 'Não foi possivel Deletar!')
     }
 
-    login(email, senha) {
-        const sql = "SELECT * FROM usuario WHERE email = ?;";
-        const result =  consulta(sql, [email], 'Não foi possível realizar o login');
+    async login(email, senha) {
+        const sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?;";
+        const result = await consulta(sql, [email, senha], 'Não foi possível realizar o login');
 
         if (result.length > 0) {
-            const match =  bcrypt.compare(senha, result[0].senha);
-            if (match) {
-                return result[0];
-            }
+            return result[0]
+        } else {
+            return null
         }
-
-        return null;
     }
 
 }
