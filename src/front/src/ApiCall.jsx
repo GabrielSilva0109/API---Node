@@ -20,8 +20,8 @@ const ApiCall = () => {
     nome: '',
     email: '',
     cpf: '',
-    senha: '  ',
-    telefone: '  ',
+    senha: '',
+    telefone: '',
   });
   const [loginCredenciais, setLoginCredenciais] = useState({
     email: '',
