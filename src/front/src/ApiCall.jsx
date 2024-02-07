@@ -18,8 +18,8 @@ const ApiCall = () => {
   const [dadosDoBanco, setDadosDoBanco] = useState([]);
   const [novoObjeto, setNovoObjeto] = useState({
     nome: '',
-    email: '',
-    cpf: '',
+    email: ' ',
+    cpf: ' ',
     senha: '  ',
     telefone: '  ',
   });
